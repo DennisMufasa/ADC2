@@ -2,10 +2,10 @@
 import datetime
 import sys
 from flask import Flask, jsonify, request, make_response
-from data_store import ORDERS
+from api.v1.data_store import ORDERS
 
 # adding the parent dir to sys.path to allow importation of data_store
-sys.path.append('../')  # i put this here to satisfy pep8 style guid
+#sys.path.append('../')  # I put this here to satisfy pep8 style guid
 
 
 APP = Flask(__name__)
@@ -30,7 +30,7 @@ def make_order():
 
     ORDERS.update(save_order)  # saving new order
 
-    # 20 is the status code for created
+    # 201 is the status code for created
     return make_response(jsonify({"Order placed": save_order}), 201)
 
 
