@@ -9,7 +9,7 @@ before_script:
   - pip install -r requirements.txt
 
 script:
-  - pytest /api/v1/tests.unit_tests/Test_place_order.py
+  - pytest /api/v1/tests/unit_tests/Test_place_order.py
 
 # safelist
 branches:
