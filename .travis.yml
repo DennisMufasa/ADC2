@@ -1,0 +1,17 @@
+language: python
+python:
+  - "3.6"
+
+install:
+  - pip install -U pip
+
+before_script:
+  - pip install -r requirements.txt
+
+script:
+  - pytest
+
+# safelist
+branches:
+  only:
+    - ft-build-v1
