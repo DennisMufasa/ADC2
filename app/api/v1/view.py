@@ -46,3 +46,7 @@ def fetch_all_orders():
     return Orders().get_orders()
 
 
+@v1_blue_print.route('/orders/<string:food>', methods=['GET'])
+def fetch_one_order(food):
+    """fetch one order based on food"""
+    return Orders().get_one_order(food)
