@@ -26,3 +26,16 @@ def update():
 
     return make_response(Orders().get_user(username))
 
+
+@v1_blue_print.route('/login', methods=['POST'])
+def login():
+    """login for all users"""
+
+    email = request.form['email']
+    password = request.form['pass']
+
+    if email == "admin@email.com" and password == "admin":
+        return make_response("welcome admin!")
+
+    return Orders().validate_user(email, password)
+
