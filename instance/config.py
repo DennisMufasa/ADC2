@@ -2,9 +2,24 @@
 
 import os
 
-# get top-level directory of project
-BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = True
-SECRET_KEY = os.urandom(24)
-DEVELOPMENT = True
+class Config(object):
+    """Docstring for config class"""
+    DEBUG = True
+    SECRET = os.getenv('SECRET')
+
+
+class Development(Config):
+    """Docstring for development class"""
+    DEBUG = True
+
+
+class Testing(Config):
+    DEBUG = True
+    TESTING = True
+
+
+configuration = {
+    'development':  Development,
+    'testing': Testing
+}

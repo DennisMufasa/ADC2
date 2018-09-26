@@ -1,11 +1,5 @@
-"""Docstring for app config"""
-from flask import Flask
+from flask import Blueprint
 
+v1_blue_print = Blueprint('v1', __name__, url_prefix='/api/v1')
 
-# app factory. Initializes a new app on call with an arg config filename
-def create_app(config_filename=None):
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_pyfile(config_filename)
-    return app
-
-
+from . import view

@@ -1,6 +1,15 @@
-"""Doctstring for run.py"""
+"""Docstring for run.py"""
+# system import
+import os
 
-from app.api.v1 import create_app
+# local import
+from . app.api import create_app
 
-app = create_app('config.py')
+config_key = os.getenv('APP_SETTINGS')
+
+app = create_app(config_key)
+
+if __name__ == "__main__":
+    app.run()
+
 
