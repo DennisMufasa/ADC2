@@ -5,7 +5,7 @@ USERS = []
 ORDERS = []
 
 
-class Users(object):
+class Users:
     """docstring for Users class"""
 
     def __init__(self):
@@ -37,16 +37,16 @@ class Users(object):
     def get_user(name):
         """docstring for get one user method"""
         if not USERS:
-            return "Data set is empty"
+            return json.dumps({"Error message:": "Data set is empty!"})
         for user in USERS:
             if user["username"] == name:
-                return json.dumps(user)
+                return json.dumps({"data:": user})
 
     @staticmethod
     def get_all_users():
         """docstring for get all users method"""
         if not USERS:
-            return "data set is empty!"
+            return json.dumps({"Error message:": "Data set is empty!"})
         return json.dumps({"users:": USERS})
 
     @staticmethod
@@ -74,7 +74,9 @@ class Orders(Users):
         """docstring place order method"""
         if not USERS:
             return "Login first"
-        new_order = {super(Orders, self).get_email(): {"food": food, "cost": cost, "accepted": True}}
+        new_order = {super(Orders, self).get_email(): {"food": food,
+                                                       "cost": cost,
+                                                       "accepted": True}}
         ORDERS.append(new_order)
         return "new order placed"
 
@@ -92,16 +94,14 @@ class Orders(Users):
     def get_orders():
         """docstring for get all orders method"""
         if not ORDERS:
-            return "Data set empty!"
+            return json.dumps({"Error message:": "Data set is empty!"})
         return json.dumps({"orders:": ORDERS})
 
     def update_order_status(self, food):
         """docstring for update status method"""
         if not ORDERS:
-            return "Data set is empty!"
+            return json.dumps({"Error message:": "Data set is empty!"})
         for order in ORDERS:
             if order[super(Orders, self).get_email()]["food"] == food:
                 order[super(Orders, self).get_email()]["accepted"] = False
                 return json.dumps({"update: ": order})
-
-
