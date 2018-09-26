@@ -39,3 +39,10 @@ def login():
 
     return Orders().validate_user(email, password)
 
+
+@v1_blue_print.route('/orders', methods=['GET'])
+def fetch_all_orders():
+    """fetch all data"""
+    return Orders().get_orders()
+
+
