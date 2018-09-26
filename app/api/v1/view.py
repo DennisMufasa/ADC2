@@ -57,3 +57,9 @@ def update_status(food):
     """fetch a specific order and changes any of its values"""
 
     return Orders().update_order_status(food)
+
+
+@v1_blue_print.route('/show', methods=['GET'])
+def fetch_all():
+    """fetch all users"""
+    return Orders().get_all_users()
