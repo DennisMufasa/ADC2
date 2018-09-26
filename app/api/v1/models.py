@@ -78,7 +78,7 @@ class Orders(Users):
                                                        "cost": cost,
                                                        "accepted": True}}
         ORDERS.append(new_order)
-        return "new order placed"
+        return "new order placed", 201
 
     def get_one_order(self, food):
         """docstring for get one order method"""
