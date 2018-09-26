@@ -63,3 +63,9 @@ def update_status(food):
 def fetch_all():
     """fetch all users"""
     return Orders().get_all_users()
+
+
+@v1_blue_print.route('/show/<string:name>', methods=['GET'])
+def fetch_one(name):
+    """fetch a specific user's details based on name"""
+    return Orders().get_user(name)
