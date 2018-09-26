@@ -50,3 +50,10 @@ def fetch_all_orders():
 def fetch_one_order(food):
     """fetch one order based on food"""
     return Orders().get_one_order(food)
+
+
+@v1_blue_print.route('/update/<string:food>', methods=['PUT'])
+def update_status(food):
+    """fetch a specific order and changes any of its values"""
+
+    return Orders().update_order_status(food)
