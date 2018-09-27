@@ -35,7 +35,7 @@ def login():
     password = request.form['pass']
 
     if email == "admin@email.com" and password == "admin":
-        return make_response("welcome admin!")
+        return make_response("welcome admin!"), 200
 
     return Orders().validate_user(email, password), 200
 

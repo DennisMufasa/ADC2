@@ -60,10 +60,10 @@ class Users:
 
     @staticmethod
     def validate_user(email, password):
-        """docstring for valiadte method"""
+        """docstring for validate method"""
         for user in USERS:
             if user['email'] == email and user['password'] == password:
-                return "Validation Successfull!"
+                return "Validation Successful!"
         return "Invalid credentials"
 
 
@@ -78,7 +78,7 @@ class Orders(Users):
                                                        "cost": cost,
                                                        "accepted": True}}
         ORDERS.append(new_order)
-        return "new order placed", 201
+        return "new order placed"
 
     def get_one_order(self, food):
         """docstring for get one order method"""

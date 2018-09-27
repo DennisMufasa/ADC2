@@ -1,17 +1,13 @@
 """Docstring for test_views"""
 # system imports
-import os
 import sys
-
-base_dir = os.path.abspath(os.path.dirname(__file__))
-sys.path.append(base_dir)
+sys.path.append("..")
 
 # third party module imports
 import unittest
 
 # local imports
-from app.api import create_app
-from app.api.v1.models import Orders
+from ...api import create_app
 
 
 class TestViews(unittest.TestCase):
