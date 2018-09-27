@@ -3,7 +3,7 @@
 import os
 
 # local import
-from . app.api import create_app
+from app.api import create_app
 
 config_key = os.getenv('APP_SETTINGS')
 

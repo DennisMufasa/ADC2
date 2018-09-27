@@ -3,7 +3,7 @@
 from flask import Flask
 
 # local import
-from ...instance.config import configuration
+from app.instance.config import configuration
 
 
 # app factory. Initializes a new app on call with an arg config filename
