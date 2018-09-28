@@ -9,7 +9,7 @@ before_script:
   - pip install -r requirements.txt
 
 script:
-  - pytest --with-coverage
+  - pytest
 
 after_script:
   - coveralls
