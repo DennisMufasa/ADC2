@@ -1,10 +1,6 @@
 """docstring for classes"""
 import json
 
-USERS = []
-ORDERS = []
-
-
 class Users:
     """docstring for Users class"""
 
@@ -14,94 +10,88 @@ class Users:
         self.email = ""
         self.password = ""
         self.phone = ""
+        self.Users = []
 
-    def add_user(self, name, email, password, phone):
+    def add_user(self, cred):
         """docstring for add user method"""
-        self.username = name
-        self.email = email
-        self.password = password
-        self.phone = phone
+        self.username = cred["name"]
+        self.email = cred["email"]
+        self.password = cred["password"]
+        self.phone = cred["phone"]
 
-        for user in USERS:
+        for user in self.Users:
             if user['email'] == self.email:
                 return "That account already exists!"
 
-        USERS.append({"username": self.username,
+        self.Users.append({"username": self.username,
                       "password": self.password,
                       "email": self.email,
                       "phone": self.phone})
 
         return "user added!"
 
-    @staticmethod
-    def get_user(name):
+    def get_user(self, name):
         """docstring for get one user method"""
-        if not USERS:
-            return json.dumps({"Error message:": "Data set is empty!"})
-        for user in USERS:
-            if user["username"] == name:
-                return json.dumps({"data:": user})
+        if not self.Users:
+            return "There are no users registered!"
+        for user in self.Users:
+            if user["username"] != name:
+                continue
+            return user
 
-    @staticmethod
-    def get_all_users():
+    def get_all_users(self):
         """docstring for get all users method"""
-        if not USERS:
-            return json.dumps({"Error message:": "Data set is empty!"})
-        return json.dumps({"users:": USERS})
+        if not self.Users:
+            return "There are no users registered!"
+        return self.Users
 
-    @staticmethod
-    def get_email():
-        """docstring for get email method"""
-        if not USERS:
-            return "data set is empty"
-        for user in USERS:
-            email = user["email"]
-            return email
-
-    @staticmethod
-    def validate_user(email, password):
+    def validate_user(self, cred):
         """docstring for validate method"""
-        for user in USERS:
-            if user['email'] == email and user['password'] == password:
+        for user in self.Users:
+            if user['email'] == cred["email"] and user['password'] == cred["password"]:
                 return "Validation Successful!"
         return "Invalid credentials"
 
 
-class Orders(Users):
-    """docstring for class Orders method"""
+class Menu:
+    """docstring for food orders"""
 
-    def place_order(self, food, cost):
+    def __init__(self):
+        self.Orders = []
+        self.count = 1
+
+    def place_order(self, order):
         """docstring place order method"""
-        if not USERS:
-            return "Login first"
-        new_order = {super(Orders, self).get_email(): {"food": food,
-                                                       "cost": cost,
-                                                       "accepted": True}}
-        ORDERS.append(new_order)
-        return "new order placed"
+        if not order:
+            return "No order for food placed!"
+        self.Orders.append({"OrderId":self.count,
+                            "order": order,
+                            "Accepted": True})
 
-    def get_one_order(self, food):
+        self.count = self.count + 1
+        return "Order placed Successfully!"
+
+    def get_one_order(self, order_id):
         """docstring for get one order method"""
-        if not ORDERS:
-            return "Data set is empty!"
-        for order in ORDERS:
-            if order[super(Orders, self).get_email()]["food"] == food:
-                return json.dumps({"food:": order[super(Orders, self).get_email()]["food"],
-                                   "cost:": order[super(Orders, self).get_email()]["cost"]})
-            return "Sorry order not available!"
+        if not self.Orders:
+            return "No orders for food placed!"
+        for order in self.Orders:
+            if order["OrderId"] != order_id:
+                continue
+            return order
 
-    @staticmethod
-    def get_orders():
+    def get_orders(self):
         """docstring for get all orders method"""
-        if not ORDERS:
-            return json.dumps({"Error message:": "Data set is empty!"})
-        return json.dumps({"orders:": ORDERS})
+        if not self.Orders:
+            return "No order for food placed!"
+        return self.Orders
 
-    def update_order_status(self, food):
+    def update_order_status(self, order_id):
         """docstring for update status method"""
-        if not ORDERS:
-            return json.dumps({"Error message:": "Data set is empty!"})
-        for order in ORDERS:
-            if order[super(Orders, self).get_email()]["food"] == food:
-                order[super(Orders, self).get_email()]["accepted"] = False
-                return json.dumps({"update: ": order})
+        if not self.Orders:
+            return "No order for food placed!"
+        for order in self.Orders:
+            if order["OrderId"] != order_id:
+                continue
+            order["Accepted"] = False
+            return order

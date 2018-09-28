@@ -3,13 +3,13 @@
 from flask import Flask
 
 # local import
-from app.instance.config import configuration
+from ..instance.config import configuration
 
 
 # app factory. Initializes a new app on call with an arg config filename
-def create_app(config_filename=None):
+def create_app(config_key):
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object(configuration[config_filename])
+    app.config.from_object(configuration[config_key])
 
     # local import
     from . v1 import v1_blue_print

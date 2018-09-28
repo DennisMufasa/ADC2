@@ -1,71 +1,54 @@
 """Docstring for endpoints"""
-from flask import request, make_response
-from .models import Orders
+from flask import request, make_response, jsonify
+from .models import Users,Menu
 from . import v1_blue_print
 
+USER = Users()
+FOOD_ORDER = Menu()
 
 # routes
-@v1_blue_print.route('/', methods=['POST'])
-def home():
+@v1_blue_print.route('/orders', methods=['GET','POST'])
+def orders():
     """posting data from a form to server"""
-    food = request.form['food']
-    cost = request.form['cost']
+    if request.method == 'POST':
+        request_data = request.get_json()
+        return make_response(jsonify({"Message": FOOD_ORDER.place_order(request_data)}), 201)
 
-    return Orders().place_order(food, cost), 201
+    return make_response(jsonify({"Message": FOOD_ORDER.get_orders()}, 200))
 
+
+@v1_blue_print.route('/orders/<int:orderId>', methods=['GET'])
+def fetch_one_order(orderId):
+    """fetch one order based on order id"""
+    return make_response(jsonify({"Message": FOOD_ORDER.get_one_order(orderId)}), 200)
+
+
+@v1_blue_print.route('/orders/<int:orderId>', methods=['PUT'])
+def update_status(orderId):
+    """fetch a specific order and changes any of its values"""
+    return make_response(jsonify({"Message": FOOD_ORDER.update_order_status(orderId)}), 201)
 
 @v1_blue_print.route('/signup', methods=['POST'])
 def update():
     """sign up new users"""
-    username = request.form['name']
-    email = request.form['email']
-    password = request.form['password']
-    phone = request.form['phone']
-
-    Orders().add_user(username, email, password, phone)
-
-    return make_response(Orders().get_user(username)), 201
+    request_data = request.get_json()
+    return make_response(jsonify({"Message": USER.add_user(request_data)}), 201)
 
 
 @v1_blue_print.route('/login', methods=['POST'])
 def login():
     """login for all users"""
-
-    email = request.form['email']
-    password = request.form['pass']
-
-    if email == "admin@email.com" and password == "admin":
-        return make_response("welcome admin!"), 200
-
-    return Orders().validate_user(email, password), 200
+    request_data = request.get_json()
+    return make_response(jsonify({"Message": USER.validate_user(request_data)}), 200)
 
 
-@v1_blue_print.route('/orders', methods=['GET'])
-def fetch_all_orders():
-    """fetch all data"""
-    return Orders().get_orders(), 200
-
-
-@v1_blue_print.route('/orders/<string:food>', methods=['GET'])
-def fetch_one_order(food):
-    """fetch one order based on food"""
-    return Orders().get_one_order(food), 200
-
-
-@v1_blue_print.route('/update/<string:food>', methods=['PUT'])
-def update_status(food):
-    """fetch a specific order and changes any of its values"""
-
-    return Orders().update_order_status(food), 201
-
-
-@v1_blue_print.route('/show', methods=['GET'])
+@v1_blue_print.route('/users', methods=['GET'])
 def fetch_all():
     """fetch all users"""
-    return Orders().get_all_users(), 200
+    return make_response(jsonify({"Message": USER.get_all_users()}), 200)
 
 
-@v1_blue_print.route('/show/<string:name>', methods=['GET'])
+@v1_blue_print.route('/user/<string:name>', methods=['GET'])
 def fetch_one(name):
     """fetch a specific user's details based on name"""
-    return Orders().get_user(name), 200
+    return make_response(jsonify({"Message": USER.get_user(name)}), 200)

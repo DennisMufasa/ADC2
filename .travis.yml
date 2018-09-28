@@ -9,7 +9,10 @@ before_script:
   - pip install -r requirements.txt
 
 script:
-  - python app/tests/v1/test_views.py
+  - pytest --with-coverage
+
+after_script:
+  - coveralls
 
 # safelist
 branches:
